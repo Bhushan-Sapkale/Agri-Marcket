@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473798441565",
+    "project_id": "agrimarket-236f1",
+    "storage_bucket": "agrimarket-236f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473798441565:android:a777235a6ea18aa340ebb4",
+        "android_client_info": {
+          "package_name": "com.example.agri_market"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWQst8p6ygjHEFpHMGAnAmvrT1FLrNytk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
