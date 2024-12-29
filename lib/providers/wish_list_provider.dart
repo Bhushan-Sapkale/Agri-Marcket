@@ -48,7 +48,7 @@ class WishListProvider with ChangeNotifier {
         productName: element.get("wishListName"),
         productPrice: element.get("wishListPrice"),
         productQuantity: element.get("wishListQuantity"),
-        productUnit: []
+       // productUnit: []
       );
 
       newList.add(productModel);

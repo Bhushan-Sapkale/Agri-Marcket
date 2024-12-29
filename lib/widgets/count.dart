@@ -11,7 +11,6 @@ class Count extends StatefulWidget{
   String productImage;
   String productId;
   var productUnit;
-
   int productPrice;
 
   Count({ this.productUnit, required this.productName, required this.productImage, required this.productId, required this.productPrice});
@@ -124,7 +123,7 @@ class _CountState extends State<Count>{
               cartName: widget.productName,
               cartPrice: widget.productPrice,
               cartQuantity: count,
-              cartUnit: widget.productUnit
+             // cartUnit: widget.productUnit
 
             );
           },

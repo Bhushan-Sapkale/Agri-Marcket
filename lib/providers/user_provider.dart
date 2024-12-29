@@ -33,7 +33,6 @@ class UserProvider with ChangeNotifier {
           userEmail: value.get("userEmail"),
           userImage: value.get("userImage"),
           userName: value.get("userName"),
-
           userId: value.get("userId")
       );
       currentData = userModel;

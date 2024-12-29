@@ -12,7 +12,7 @@ List<ProductModel>search=[];
     productName: element.get("productName"),
     productPrice: element.get("productPrice"),
       productId: element.get("productId"),
-      productUnit: element.get("productUnit")
+    //  productUnit: element.get("productUnit")
     );
     search.add(productModel);
   }

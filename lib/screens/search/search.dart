@@ -1,11 +1,12 @@
 import 'package:agri_market/models/product_model.dart';
 import 'package:agri_market/widgets/single_item.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Search extends StatefulWidget {
   final List<ProductModel> search;
 
-  Search({this.search = const []});
+  Search({required this.search});
 
   @override
   State<Search> createState() => _SearchState();
@@ -65,20 +66,19 @@ class _SearchState extends State<Search> {
           // Search Results
           _searchItem.isEmpty
               ? Center(
-            child: Text(
-              "No items found!",
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          )
-              : Column(
+            child: Lottie.asset(
+              'assets/notFound.json', // Add your animation file
+    ),
+    ) : Column(
             children: _searchItem.map((data) {
               return SingleItem(
                 isBool: false,
-                productId: data.productId,
-                productQuantity: data.productQuantity,
+               //productId: data.productId,
                 productImage: data.productImage,
                 productName: data.productName,
                 productPrice: data.productPrice,
+                productId: data.productId,
+               productQuantity: data.productQuantity?? 1,
               );
             }).toList(),
           ),

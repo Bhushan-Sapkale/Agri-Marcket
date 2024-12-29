@@ -1,4 +1,5 @@
 import 'package:agri_market/config/colors.dart';
+import 'package:agri_market/providers/check_out_provider.dart';
 import 'package:agri_market/providers/product_provider.dart';
 import 'package:agri_market/providers/review_cart_provider.dart';
 import 'package:agri_market/providers/user_provider.dart';
@@ -35,7 +36,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<WishListProvider>(
           create: (context)=> WishListProvider(),
-        )
+        ),
+        ChangeNotifierProvider<CheckoutProvider>(
+          create: (context)=> CheckoutProvider(),
+        ),
       ],
 
 

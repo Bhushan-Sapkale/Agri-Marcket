@@ -11,7 +11,7 @@ class ReviewCartProvider with ChangeNotifier{
     required String cartImage,
     required int cartPrice,
     required int cartQuantity,
-    var cartUnit,
+    //var cartUnit,
 
   }) async {
 
@@ -25,7 +25,7 @@ class ReviewCartProvider with ChangeNotifier{
       "cartImage":cartImage,
       "cartPrice":cartPrice,
       "cartQuantity": cartQuantity,
-      "cartUnit": cartUnit,
+      //"cartUnit": cartUnit,
       "isAdd": true,
     }
     );
@@ -49,7 +49,7 @@ class ReviewCartProvider with ChangeNotifier{
         cartName: element.get("cartName"),
         cartPrice: element.get("cartPrice"),
         cartQuantity: element.get("cartQuantity"),
-        cartUnit: element.get("cartUnit"),
+      //  cartUnit: element.get("cartUnit"),
       );
 
       newList.add(reviewCartModel);
@@ -78,13 +78,20 @@ class ReviewCartProvider with ChangeNotifier{
       "cartImage":cartImage,
       "cartPrice":cartPrice,
       "cartQuantity": cartQuantity,
-
       "isAdd": true,
     }
     );
   }
   List<ReviewCartModel> get getReviewCartDataList{
     return reviewCartDataList;
+  }
+//////////////////////TotalPrice/////////////////////////
+  getTotalPrice(){
+    double total = 0.0;
+    reviewCartDataList.forEach((element){
+      total += element.cartPrice * element.cartQuantity;
+    });
+    return total;
   }
 
   ////////////////////// Delete /////////////////////////

@@ -1,8 +1,10 @@
 import 'package:agri_market/config/colors.dart';
 import 'package:agri_market/models/review_cart_model.dart';
 import 'package:agri_market/providers/review_cart_provider.dart';
+import 'package:agri_market/screens/check_out/dilevery_details/dilevery_delails.dart';
 import 'package:agri_market/widgets/single_item.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +51,7 @@ class ReviewCart extends StatelessWidget {
       bottomNavigationBar: ListTile(
         title: Text("Total Amount"),
         subtitle: Text(
-          " 170.00",
+          "\₹ ${reviewCartProvider.getTotalPrice()}",
           style: TextStyle(
             color: Colors.green[900],
           ),
@@ -57,13 +59,18 @@ class ReviewCart extends StatelessWidget {
         trailing: Container(
           width: 160,
           child: MaterialButton(
-            child: Text("Submit"),
+            child: Text("Proceed"),
             color: primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
             onPressed: () {
-
+              if (reviewCartProvider.getReviewCartDataList.isEmpty) {
+                Fluttertoast.showToast(msg: "Cart is Empty");
+                return;
+              }
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DeliveryDetails(),
+              ),);
             },
           ),
         ),
@@ -96,7 +103,7 @@ class ReviewCart extends StatelessWidget {
                 productPrice: data.cartPrice,
                 productId: data.cartId,
                 productQuantity: data.cartQuantity,
-                productUnit: data.cartUnit,
+               // productUnit: data.cartUnit,
                 onDelete: (){
                   showAlertDialog(context, data);
                 },

@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 productImage: grainProductData.productImage,
                 productName: grainProductData.productName,
                 productId: grainProductData.productId,
-                productUnit: grainProductData,
+                //productUnit: grainProductData,
               );
             }).toList(),
           ),
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 productImage: fruitsProductData.productImage,
                 productName: fruitsProductData.productName,
                 productId: fruitsProductData.productId,
-                productUnit: fruitsProductData,
+                //productUnit: fruitsProductData,
               );
             }).toList(),
           ),
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 productImage: vegetablesProductData.productImage,
                 productName: vegetablesProductData.productName,
                 productId: vegetablesProductData.productId,
-                productUnit: vegetablesProductData,
+               // productUnit: vegetablesProductData,
               );
             }).toList(),
           ),
@@ -208,18 +208,16 @@ class _HomeScreenState extends State<HomeScreen> {
  @override
   void initState() {
     // TODO: implement initState
-   ProductProvider productProvider = Provider.of(context,listen: false);
-   productProvider.fetchGrainsProductData();
-   productProvider.fetchFruitsProductData();
-   productProvider.fetchVegetablesProductData();
+   ProductProvider initproductProvider = Provider.of(context,listen: false);
+   initproductProvider.fetchGrainsProductData();
+   initproductProvider.fetchFruitsProductData();
+   initproductProvider.fetchVegetablesProductData();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
     productProvider = Provider.of(context,);
-
     UserProvider userProvider = Provider.of(context);
     userProvider.getUserData();
 

@@ -82,7 +82,7 @@ class _WishListState extends State<WishList> {
                 productName: data.productName,
                 productPrice: data.productPrice,
                 productId: data.productId,
-                productQuantity: data.productQuantity,
+                productQuantity: data.productQuantity??1,
                 onDelete: () {
                   showAlertDialog(context,data);
                 },
