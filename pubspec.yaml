@@ -44,6 +44,8 @@ dependencies:
   fluttertoast: ^8.2.10
   location:
   google_maps_flutter:
+  pay: ^3.0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +64,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - assets/sample_payment_configuration.json
     - assets/
 
   # The following line ensures that the Material Icons font is

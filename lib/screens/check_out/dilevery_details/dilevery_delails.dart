@@ -7,8 +7,14 @@ import 'package:agri_market/screens/check_out/payment_summary/payment_summary.da
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DeliveryDetails extends StatelessWidget {
+class DeliveryDetails extends StatefulWidget {
 
+  @override
+  State<DeliveryDetails> createState() => _DeliveryDetailsState();
+}
+
+class _DeliveryDetailsState extends State<DeliveryDetails> {
+  late DeliveryAddressModel value;
   @override
   Widget build(BuildContext context) {
     CheckoutProvider deliveryAddressProvider = Provider.of(context);
@@ -34,7 +40,9 @@ class DeliveryDetails extends StatelessWidget {
             deliveryAddressProvider.getDeliveryAddressList.isEmpty ?
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddDeliverAddress(),
             ),):
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentSummary(),
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentSummary(
+              deliveryAddressList: value,
+            ),
             ),);
           },
           color: primaryColor,
@@ -62,7 +70,10 @@ class DeliveryDetails extends StatelessWidget {
             ),
           ):
           Column(
-            children: deliveryAddressProvider.getDeliveryAddressList.map((e){
+            children: deliveryAddressProvider.getDeliveryAddressList.map<Widget>((e){
+              setState((){
+                value = e;
+              });
               return  SingleDeliveryItem(
                 address: "area: ${e.area}, street: ${e.street}, society: ${e.society}, city: ${e.city}, pincode:${e.pinCode}",
                 title: "${e.firstName} ${e.lastName} ",

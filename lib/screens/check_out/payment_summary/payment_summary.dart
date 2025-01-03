@@ -1,8 +1,17 @@
 import 'package:agri_market/config/colors.dart';
+import 'package:agri_market/models/delivery_address_model.dart';
+import 'package:agri_market/providers/review_cart_provider.dart';
+import 'package:agri_market/screens/check_out/dilevery_details/single_dilevery_item.dart';
+import 'package:agri_market/screens/check_out/payment_summary/mygoogle_pay.dart';
 import 'package:agri_market/screens/check_out/payment_summary/order_items.dart';
+import 'package:agri_market/screens/home_screen/anime.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PaymentSummary extends StatefulWidget {
+
+  final DeliveryAddressModel deliveryAddressList;
+  PaymentSummary({required this.deliveryAddressList});
   @override
   _PaymentSummaryState createState() => _PaymentSummaryState();
 
@@ -11,8 +20,16 @@ enum AddressType { CashOnDelivery, OnlinePayment }
 
 class _PaymentSummaryState extends State<PaymentSummary> {
   var myType = AddressType.CashOnDelivery;
+
   @override
   Widget build(BuildContext context) {
+
+    ReviewCartProvider reviewCartProvider = Provider.of(context);
+    reviewCartProvider.getReviewCartData();
+    final shipping = 30.0;
+    final  platformFee = 5.0;
+    final totalPrice = reviewCartProvider.getTotalPrice();
+    final finalPrice = totalPrice+shipping+platformFee;
     return Scaffold(
       appBar: AppBar(
         title: Text("Payment Summary",
@@ -21,7 +38,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
       bottomNavigationBar: ListTile(
         title: Text("Total Amount"),
         subtitle: Text(
-          "\₹ 300",
+          "\₹ ${finalPrice}",
           style: TextStyle(
             color: Colors.green[700],
             fontWeight: FontWeight.bold,
@@ -31,7 +48,13 @@ class _PaymentSummaryState extends State<PaymentSummary> {
         trailing: Container(
           width: 160,
           child: MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              myType == AddressType.OnlinePayment? Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context)=>MyGooglePay(
+                total: finalPrice, //
+              ),
+              ),):Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Anime(),));
+            },
             child: Text(
               "Place Order",
               style: TextStyle(
@@ -52,33 +75,33 @@ class _PaymentSummaryState extends State<PaymentSummary> {
           itemBuilder: (context, index) {
             return Column(
               children: [
-                ListTile(
-                  title: Text("First & Last Name"),
-                  subtitle: Text("rea, Chh Sambhaji nagar , street, 20, societ"),
-                ),
+            SingleDeliveryItem(
+            address: "area: ${widget.deliveryAddressList.area}, street: ${widget.deliveryAddressList.street},"
+                " society: ${widget.deliveryAddressList.society}, city: ${widget.deliveryAddressList.city}, "
+                "pincode:${widget.deliveryAddressList.pinCode}",
+              title: "${widget.deliveryAddressList.firstName} ${widget.deliveryAddressList.lastName} ",
+              number: widget.deliveryAddressList.mobileNo,
+              addressType: widget.deliveryAddressList.addressType == "AddressType.Other"?"Other" :
+              widget.deliveryAddressList.addressType == "AddressType.Mess"?"Mess" : "Hotel",
+            ),
                 Divider(),
                 ExpansionTile(
-                  title: Text("Order Items 6"),
-                  children: [
-                    OrderItem(),
-                    OrderItem(),
-                    OrderItem(),
-                    OrderItem(),
-                    OrderItem(),
-                    OrderItem(),
-                  ],
+                  title: Text("Order Items ${reviewCartProvider.getReviewCartDataList.length}"),
+                  children:  reviewCartProvider.getReviewCartDataList.map((e){
+                    return OrderItem(e: e,);
+            }).toList(),
                 ),
                 Divider(),
                 ListTile(
                   minVerticalPadding: 5,
                   leading: Text(
-                    "Sub Total",
+                    "Total",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   trailing: Text(
-                    "\₹ 200",
+                    "\₹ ${totalPrice}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -93,7 +116,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                     ),
                   ),
                   trailing: Text(
-                    "\₹ 30",
+                    "\₹ ${shipping}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -108,7 +131,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                     ),
                   ),
                   trailing: Text(
-                    "\₹ 5",
+                    "\₹ ${platformFee}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -145,7 +168,6 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                   },
                   secondary: Icon(Icons.paypal, color: primaryColor),
                 ),
-
               ],
             );
           },

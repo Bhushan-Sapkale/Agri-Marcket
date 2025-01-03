@@ -1,9 +1,11 @@
+import 'package:agri_market/auth/sign_in.dart';
 import 'package:agri_market/config/colors.dart';
 import 'package:agri_market/providers/user_provider.dart';
 import 'package:agri_market/screens/home_screen/home_screen.dart';
 import 'package:agri_market/screens/my_profile/my_profile.dart';
 import 'package:agri_market/screens/review_cart/review_cart.dart';
 import 'package:agri_market/screens/wish_list/wish_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DrawerSide extends StatefulWidget {
@@ -70,8 +72,13 @@ class _DrawerSideState extends State<DrawerSide> {
                         Container(
                           height: 30,
                           child: OutlinedButton(
-                            onPressed: () {},
-                            child: Text("Login"),
+                            onPressed: () async {
+                              // Log out user when the button is pressed
+                              await FirebaseAuth.instance.signOut();
+                              // Navigate to the SignIn screen after logging out
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignIn()));
+                            },
+                            child: Text("LogOut"),
                           ),
                         ),
                       ],

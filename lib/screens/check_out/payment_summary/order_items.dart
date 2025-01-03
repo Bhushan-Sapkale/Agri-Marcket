@@ -1,41 +1,36 @@
+import 'package:agri_market/models/review_cart_model.dart';
 import 'package:flutter/material.dart';
 
 class OrderItem extends StatelessWidget {
   final bool? isTrue;
-
-  OrderItem({ this.isTrue});
+  final ReviewCartModel e;
+  OrderItem({ this.isTrue,required this.e});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Image.network(
-        "https://i.dlpng.com/static/png/1323576-watermelon-png-png-picture-of-watermelon-1400_965_previous.png",
+       e.cartImage,
         width: 60,
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Food Name",
+            e.cartName,
             style: TextStyle(
               color: Colors.grey[600],
             ),
           ),
           Text(
-            "50 Gram",
-            style: TextStyle(
-              color: Colors.grey[600],
-            ),
-          ),
-          Text(
-            "\₹ 30",
+            "\₹ ${e.cartPrice}",
             style: TextStyle(
               color: Colors.grey[600],
             ),
           ),
         ],
       ),
-      subtitle: Text("5"),
+      subtitle: Text(e.cartQuantity.toString()),
     ); // ListTile
   }
 }

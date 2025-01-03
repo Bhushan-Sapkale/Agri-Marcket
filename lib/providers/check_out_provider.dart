@@ -1,4 +1,5 @@
 import 'package:agri_market/models/delivery_address_model.dart';
+import 'package:agri_market/models/review_cart_model.dart';
 import 'package:agri_market/screens/check_out/add_delivery_address/add_delivery_address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,7 +51,9 @@ class CheckoutProvider with ChangeNotifier {
       isloading = true;
       notifyListeners();
 
-      await FirebaseFirestore.instance.collection("AddDeliverAddress").doc(FirebaseAuth.instance.currentUser!.uid).set({
+      await FirebaseFirestore.instance.collection("AddDeliverAddress")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
         "firstname": firstName.text,
         "lastname": lastName.text,
         "mobileNo": mobileNo.text,
@@ -64,6 +67,7 @@ class CheckoutProvider with ChangeNotifier {
         "addressType": myType.toString(),
         "longitude": setLocation?.longitude,
         "latitude": setLocation?.latitude,
+       // "cartId" : cartId,
       }).then((value) async {
         isloading = false;
         notifyListeners();

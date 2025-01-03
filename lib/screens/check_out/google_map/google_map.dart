@@ -14,18 +14,30 @@ class _GoogleMapState extends State<CustomGoogleMap> {
   LatLng _initialCameraPosition = LatLng(19.8776, 75.3423);
   late GoogleMapController controller;
   Location _location = Location();
+  Set<Marker> _markers = {}; // Set to hold the markers
 
   void _onMapCreated(GoogleMapController _value) {
     controller = _value;
     _location.onLocationChanged.listen((event) {
+      LatLng currentPosition = LatLng(event.latitude!, event.longitude!);
+      // Update the camera position and marker
       controller.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            target: LatLng(event.latitude!, event.longitude!),
+            target: currentPosition,
             zoom: 15,
           ),
         ),
       );
+      setState(() {
+        _markers = {
+          Marker(
+            markerId: MarkerId("currentLocation"),
+            position: currentPosition,
+            infoWindow: InfoWindow(title: "You are here"),
+          ),
+        };
+      });
     });
   }
 
@@ -50,6 +62,7 @@ class _GoogleMapState extends State<CustomGoogleMap> {
                 mapType: MapType.normal,
                 onMapCreated: _onMapCreated,
                 mapToolbarEnabled: true,
+                markers: _markers, // Add markers to the map
               ),
               Positioned(
                 bottom: 0,
@@ -68,6 +81,16 @@ class _GoogleMapState extends State<CustomGoogleMap> {
                     onPressed: () async {
                       await _location.getLocation().then((value) {
                         setState(() {
+                          LatLng selectedLocation =
+                          LatLng(value.latitude!, value.longitude!);
+                          _markers.add(
+                            Marker(
+                              markerId: MarkerId("selectedLocation"),
+                              position: selectedLocation,
+                              infoWindow:
+                              InfoWindow(title: "Selected Location"),
+                            ),
+                          );
                           checkoutProvider.setLocation = value;
                         });
                       });
