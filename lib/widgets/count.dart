@@ -1,5 +1,4 @@
 import 'package:agri_market/config/colors.dart';
-import 'package:agri_market/models/product_model.dart';
 import 'package:agri_market/providers/review_cart_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
